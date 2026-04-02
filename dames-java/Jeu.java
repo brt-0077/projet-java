@@ -1,0 +1,42 @@
+import java.util.ArrayList;
+
+public class Jeu {
+
+    Plateau plateau;
+    Joueur joueur1, joueur2;
+    Joueur joueurCourant;
+    ArrayList<Coup> historique = new ArrayList<>();
+
+    public Jeu() {
+        plateau = new Plateau();
+        joueur1 = new Joueur("Joueur 1", "blanc");
+        joueur2 = new Joueur("Joueur 2", "noir");
+        joueurCourant = joueur1;
+    }
+
+    public boolean jouerCoup(int x1, int y1, int x2, int y2) {
+        Case depart = plateau.cases[x1][y1];
+        Case arrivee = plateau.cases[x2][y2];
+
+        if (depart.estVide()) return false;
+
+        Piece p = depart.piece;
+
+        if (!p.getCouleur().equals(joueurCourant.couleur)) return false;
+
+        if (p.mouvementValide(x1, y1, x2, y2) && arrivee.estVide()) {
+            arrivee.piece = p;
+            depart.piece = null;
+
+            historique.add(new Coup(x1, y1, x2, y2));
+            changerJoueur();
+            return true;
+        }
+
+        return false;
+    }
+
+    private void changerJoueur() {
+        joueurCourant = (joueurCourant == joueur1) ? joueur2 : joueur1;
+    }
+}
