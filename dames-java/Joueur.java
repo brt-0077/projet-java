@@ -6,4 +6,12 @@ public class Joueur {
         this.nom = nom;
         this.couleur = couleur;
     }
+
+    public String getNom() {
+        return nom;
+    }
+
+    public String getCouleur() {
+        return couleur;
+    }
 }
