@@ -1,0 +1,70 @@
+import javax.swing.*;
+import java.awt.*;
+
+public class InterfaceGraphique extends JFrame {
+
+    JButton[][] boutons = new JButton[8][8];
+    Jeu jeu = new Jeu();
+
+    int xSelection = -1, ySelection = -1;
+
+    public InterfaceGraphique() {
+        setTitle("Jeu de Dames");
+        setSize(600, 600);
+        setLayout(new GridLayout(8, 8));
+
+        for (int i = 0; i < 8; i++) {
+            for (int j = 0; j < 8; j++) {
+
+                JButton btn = new JButton();
+                boutons[i][j] = btn;
+
+                if ((i + j) % 2 == 0)
+                    btn.setBackground(Color.WHITE);
+                else
+                    btn.setBackground(Color.GRAY);
+
+                int x = i;
+                int y = j;
+
+                btn.addActionListener(e -> gererClic(x, y));
+
+                add(btn);
+            }
+        }
+
+        setDefaultCloseOperation(EXIT_ON_CLOSE);
+        setVisible(true);
+        rafraichir();
+    }
+
+    private void gererClic(int x, int y) {
+        if (xSelection == -1) {
+            xSelection = x;
+            ySelection = y;
+        } else {
+            if (jeu.jouerCoup(xSelection, ySelection, x, y)) {
+                rafraichir();
+            }
+            xSelection = -1;
+        }
+    }
+
+    private void rafraichir() {
+        for (int i = 0; i < 8; i++) {
+            for (int j = 0; j < 8; j++) {
+                Piece p = jeu.plateau.cases[i][j].piece;
+
+                if (p == null) {
+                    boutons[i][j].setText("");
+                } else {
+                    boutons[i][j].setText(p instanceof Dame ? "D" : "P");
+                }
+            }
+        }
+    }
+
+    public static void main(String[] args) {
+        new InterfaceGraphique();
+    }
+}
