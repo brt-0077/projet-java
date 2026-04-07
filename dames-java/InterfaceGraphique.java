@@ -125,8 +125,13 @@ public class InterfaceGraphique extends JFrame {
         add(panelPrincipal);
         setVisible(true);
         rafraichir();
+        mettreAJourScores();
         mettreAJourStatut();
         demarrerChronoTour();
+    }
+
+    private void mettreAJourScores() {
+        mettreAJourStatut();
     }
 
     private void gererClic(int x, int y) {
@@ -185,7 +190,7 @@ public class InterfaceGraphique extends JFrame {
         String joueur = jeu.joueurCourant == jeu.joueur1
                 ? jeu.joueur1.getNom() + " (Blanc)"
                 : jeu.joueur2.getNom() + " (Noir)";
-        statutLabel.setText("Tour: " + joueur);
+        statutLabel.setText("Tour: " + joueur + " | Pts " + jeu.joueur1.getPoints() + "-" + jeu.joueur2.getPoints());
     }
 
     private void demarrerChronoTour() {
@@ -252,6 +257,7 @@ public class InterfaceGraphique extends JFrame {
 
     private void finaliserChangementTour() {
         rafraichir();
+        mettreAJourScores();
 
         Joueur vainqueur = jeu.verifierVainqueur();
         if (vainqueur != null) {
@@ -297,9 +303,12 @@ public class InterfaceGraphique extends JFrame {
         timerLabel.setText("Temps: --");
         alerteLabel.setText("Victoire de " + vainqueur.getNom() + " !");
 
+        String scoreFinal = jeu.joueur1.getNom() + " : " + jeu.joueur1.getPoints()
+            + " pts\n" + jeu.joueur2.getNom() + " : " + jeu.joueur2.getPoints() + " pts";
+
         JOptionPane.showMessageDialog(
                 this,
-                "Victoire de " + vainqueur.getNom() + " !",
+            "Victoire de " + vainqueur.getNom() + " !\n\nScore final:\n" + scoreFinal,
                 "Victoire",
                 JOptionPane.INFORMATION_MESSAGE
         );

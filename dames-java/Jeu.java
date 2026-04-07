@@ -58,6 +58,7 @@ public class Jeu {
 
         if (estCapture(p, x1, y1, x2, y2)) {
             supprimerPieceCapturee(p, x1, y1, x2, y2);
+            joueurCourant.ajouterPoints(1);
         }
 
         arrivee.piece = p;
