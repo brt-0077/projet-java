@@ -104,10 +104,11 @@ public class Menu extends JFrame {
 
         panelBoutons.add(Box.createVerticalStrut(20));
 
-        BoutonStyleise btnVsIA = new BoutonStyleise("🤖  Contre l'IA",
-                new Color(179, 84, 45),
-                new Color(158, 68, 36));
-        btnVsIA.addActionListener(e -> lancerJeu(true, demanderNomsJoueurs(true)));
+        BoutonStyleise btnVsIA = new BoutonStyleise("🤖  Contre l'IA (a l'avenir)",
+            new Color(112, 118, 126),
+            new Color(92, 98, 106));
+        btnVsIA.setEnabled(false);
+        btnVsIA.setToolTipText("Mode contre l'IA indisponible pour le moment");
         panelBoutons.add(btnVsIA);
 
         panelBoutons.add(Box.createVerticalStrut(20));
